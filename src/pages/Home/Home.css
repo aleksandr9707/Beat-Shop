@@ -1,0 +1,22 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
+    border-radius: 8px;
+}
+
+header, main, footer {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+header h1 {
+    color: #4A90E2;
+}
+
+footer {
+    color: #999;
+}

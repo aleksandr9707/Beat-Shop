@@ -1,0 +1,104 @@
+/* General styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Section styling */
+#section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navigation styling */
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1e1e1e;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.nav .genre {
+    flex: 1;
+    text-align: center;
+    color: #e5e5e5;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.nav .genre:hover {
+    background-color: #333;
+}
+
+/* Category styling */
+.cat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.cat a {
+    flex: 1;
+    text-align: center;
+    background-color: #1e1e1e;
+    color: #e5e5e5;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.cat a:hover {
+    background-color: #333;
+    transform: scale(1.05);
+}
+
+.cat a.active1 {
+    background-color: #FF4500;
+}
+
+/* Container styling (already provided in a previous answer) */
+#container {
+    background-color: #1e1e1e;
+    padding: 2rem;
+    border-radius: 5px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#container .important-todos {
+    color: #e5e5e5;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#container img {
+    margin-right: 1rem;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#container img:hover {
+    transform: scale(1.1);
+}
+
+#container .important-todos:first-child {
+    font-weight: bold;
+    background-color: #2e2e2e;
+}
