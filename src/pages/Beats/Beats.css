@@ -98,6 +98,28 @@ nav {
     transform: scale(1.1);
 }
 
+/* Specific styling for list items inside the container */
+#container .important-todos {
+    display: flex;
+    align-items: center; /* Vertically center align items */
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #333;
+}
+
+#container .important-todos img {
+    margin-left: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#container .important-todos img:hover {
+    transform: scale(1.1);
+}
+
 #container .important-todos:first-child {
     font-weight: bold;
     background-color: #2e2e2e;

@@ -11,10 +11,10 @@ export default function NavBar({ user }) {
   return (
     <div className="topnav">
       <Link className="active" to="/">Home</Link>
+      <Link to="/beats">Beats</Link> {/* Move the "Beats" link outside of the conditional rendering */}
       {user ? (
         <>
           <span>Welcome, {user.email}!</span>
-          <Link to="/beats">Beats</Link>
           <button onClick={handleLogout}>Logout</button>
         </>
       ) : (

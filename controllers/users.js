@@ -1,7 +1,7 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
+import User from '../models/user.js';
+import bcrypt from 'bcrypt';
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
     const saltRounds = 10;
     try {
         const { name, email, password } = req.body;
@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
         if (!user) throw new Error('Bad Credentials');

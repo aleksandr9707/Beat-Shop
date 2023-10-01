@@ -1,60 +1,99 @@
-import React, { useState } from 'react';
-import './Beats.css'; 
+import React, { useState, useEffect } from 'react';
+import './Beats.css';
 
-function Beats() {
+function Beats({ user }) {
+    const [songs, setSongs] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
 
+    const handleUpload = async () => {
+        if (!user) {
+            alert('Please log in to upload songs.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('songFile', selectedFile);
+
+        try {
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setSongs([...songs, data]);
+            } else {
+                console.error('Failed to upload the file');
+            }
+        } catch (error) {
+            console.error('There was an error uploading the file', error);
+        }
+    };
+
+    useEffect(() => {
+        // Fetch existing songs from the server when the component mounts
+        fetch('/api/songs')
+            .then((response) => response.json())
+            .then((data) => {
+                setSongs(data);
+            })
+            .catch((error) => {
+                console.error('There was an error fetching the songs', error);
+            });
+    }, []);
+
     return (
         <div id="section">
-            <nav>
-                <div className="genre">Rap</div>
-                <div className="genre">Pop</div>
-                <div className="genre">Rock</div>
-                <div className="genre">R&B</div>
-            </nav>
-
-            <div className="cat">
-                <a className="active1" href="#melodic">Melodic</a>
-                <a href="#drill">Drill</a>
-                <a href="#trap">Trap</a>
-                <a href="#drill">Rage</a>
-                <a href="#trap">Old School</a>
+            <div className="song-list">
+                {songs.map((song, index) => (
+                    <div key={index} className="song-item">
+                        <audio controls>
+                            <source src={song.filePath} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div className="song-info">
+                            <p className="song-title">{song.title || 'Filename'}</p>
+                            <p className="song-artist">{song.author || ''}</p>
+                            <p className="song-duration">{formatDuration(song.duration)}</p>
+                        </div>
+                    </div>
+                ))}
             </div>
 
-            <article id="container">
-                <ul>
-                    <li className="important-todos">
-                        Title <span style={{paddingLeft: "50px"}}>Author</span> <span style={{paddingLeft: "50px"}}>Duration</span>
-                    </li>
-                    {Array.from({ length: 9 }, (_, index) => (
-                        <li key={index} className="important-todos">
-                            {index + 1} &nbsp;&nbsp;
-                            <img src="playbutton.png" alt="Play button" /> &nbsp;&nbsp;Untitled
-                        </li>
-                    ))}
-                </ul>
-            </article>
+            {/* MP3 upload and playback functionality */}
+            {user && (
+                <div className="mp3-upload">
+                    <label>
+                        Upload a MP3:
+                        <input type="file" accept=".mp3" onChange={handleFileChange} />
+                    </label>
 
-            {/* The added MP3 upload and playback functionality */}
-            <div className="mp3-upload">
-                <label>
-                    Upload a MP3:
-                    <input type="file" accept=".mp3" onChange={handleFileChange} />
-                </label>
-                
-                {selectedFile && (
-                    <audio controls>
-                        <source src={URL.createObjectURL(selectedFile)} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                    </audio>
-                )}
-            </div>
+                    <button onClick={handleUpload}>Upload Song</button>
+
+                    {selectedFile && (
+                        <audio controls>
+                            <source src={URL.createObjectURL(selectedFile)} type="audio/mpeg" />
+                            Your browser does not support the audio element.
+                        </audio>
+                    )}
+                </div>
+            )}
+
+            {!user && <p>Please log in to upload songs.</p>} {/* Display a message if not logged in */}
         </div>
     );
+}
+
+function formatDuration(duration) {
+    // Convert duration in seconds to minutes:seconds format
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.round(duration % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
 export default Beats;
