@@ -57,7 +57,7 @@ function Beats({ user }) {
                             Your browser does not support the audio element.
                         </audio>
                         <div className="song-info">
-                            <p className="song-title">{song.title || 'Filename'}</p>
+                            <p className="song-title">{song.title || song.fileName || 'Filename'}</p>
                             <p className="song-artist">{song.author || ''}</p>
                             <p className="song-duration">{formatDuration(song.duration)}</p>
                         </div>

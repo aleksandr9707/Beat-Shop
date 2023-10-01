@@ -27,23 +27,30 @@ const upload = multer({
 
 const uploadSong = async (req, res) => {
     try {
-        // Check if the user is authenticated
-        if (!req.user) {
-            return res.status(401).json({ error: 'Unauthorized' });
-        }
+        let title = req.file.originalname; // Use let to allow reassignment
+        let author = "Unknown Artist";
+        let duration = 0;
 
-        // Extract metadata from the uploaded file
         const metadata = await musicMetadata.parseFile(req.file.path);
         console.log('Extracted Metadata:', metadata);
-        const title = metadata.common.title || "Filename";
-        const author = metadata.common.artist || " ";
-        const duration = metadata.format.duration;
+
+        if (metadata.common.title) {
+            title = metadata.common.title;
+        }
+
+        if (metadata.common.artist) {
+            author = metadata.common.artist;
+        }
+
+        if (metadata.format.duration) {
+            duration = metadata.format.duration;
+        }
 
         const song = new Song({
-            name: title, // Use the extracted title
-            author: author, // Use the extracted author
+            name: title,
+            author: author,
             path: req.file.path,
-            duration: duration // Use the extracted duration
+            duration: duration
         });
 
         await song.save();
@@ -57,6 +64,8 @@ const uploadSong = async (req, res) => {
         res.status(500).send(`Error uploading the song: ${error.message}`);
     }
 };
+
+
 
 const getSongs = async (req, res) => {
     try {

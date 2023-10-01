@@ -32,8 +32,8 @@ app.post('/api/upload', uploadMiddleware, async (req, res) => {
   try {
       const metadata = await musicMetadata.parseFile(req.file.path);
       console.log(metadata); // Add this line to debug metadata extraction
-      const title = metadata.common.title || "Untitled";
-      const author = metadata.common.artist || "Unknown Artist";
+      const title = metadata.common.title || req.file.originalname;
+      const author = metadata.common.artist || "";
       const duration = metadata.format.duration;
 
       // TODO: Save title, author, duration, and filePath to the database
