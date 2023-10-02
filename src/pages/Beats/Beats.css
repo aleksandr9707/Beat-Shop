@@ -124,3 +124,57 @@ nav {
     font-weight: bold;
     background-color: #2e2e2e;
 }
+/* In your "Beats.css" */
+
+.song-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Audio player styling */
+.song-item audio {
+    width: 100%;
+    margin-right: 10px;
+}
+
+/* Song information */
+.song-info {
+    display: flex;
+    justify-content: space-between; /* Align title and duration to opposite sides */
+    flex-grow: 1;
+}
+
+.song-title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Adjust as needed */
+    cursor: pointer;
+}
+
+.song-title:hover {
+    white-space: normal;
+    overflow: visible;
+    max-width: none;
+}
+
+.song-artist {
+    font-size: 16px;
+    color: #666;
+}
+
+.song-duration {
+    width: 100px; /* Set a fixed width for the duration bar (uniform length) */
+    text-align: right; /* Align duration text to the right */
+    font-size: 14px;
+    color: #888;
+}
+audio {
+    width: 100%;
+    margin-top: 10px; /* Adjust the margin as needed */
+  }
